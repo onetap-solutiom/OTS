@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from flask_talisman import Talisman
+import logging
 
 # Import configurations
 from config import config
@@ -30,13 +32,28 @@ from models.setting_model import Setting
 
 def create_app(config_name='default'):
     """Factory function to create and configure the Flask app."""
+    # Configure logging
+    logging.basicConfig(
+        filename=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'security.log'),
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    
     app = Flask(__name__)
     
     # Load configuration
     app.config.from_object(config[config_name])
     
     # Initialize CORS
-    CORS(app, resources={r"/api/*": {"origins": app.config.get('FRONTEND_URL', '*')}})
+    origins = app.config.get('FRONTEND_URL', '*')
+    if config_name == 'production' and origins == '*':
+        raise ValueError("FRONTEND_URL must be strictly defined in production!")
+    CORS(app, resources={r"/api/*": {"origins": origins}})
+    
+    # Initialize Talisman for security headers
+    is_prod = config_name == 'production'
+    # For API, we might need to adjust CSP, but default is usually fine for pure JSON APIs
+    Talisman(app, force_https=is_prod, session_cookie_secure=is_prod)
     
     # Initialize Database and Migrate
     db.init_app(app)

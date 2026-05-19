@@ -1,11 +1,20 @@
-import re
+from email_validator import validate_email, EmailNotValidError
 
 def is_valid_email(email):
-    """Simple email validation."""
+    """Strict email validation."""
     if not email:
         return False
-    regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    return re.match(regex, email) is not None
+    try:
+        validate_email(email, check_deliverability=False)
+        return True
+    except EmailNotValidError:
+        return False
+
+def is_valid_password(password):
+    """Enforce minimum password length for security."""
+    if not password or len(password) < 8:
+        return False
+    return True
 
 def require_fields(data, required_keys):
     """Check if required fields are present in the dictionary."""
