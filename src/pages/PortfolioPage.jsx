@@ -124,9 +124,18 @@ const PortfolioPage = () => {
                     <span className="text-[#04C244] text-xs font-semibold uppercase tracking-widest mb-1 text-shadow-sm">{project.category}</span>
                     <h3 className="text-xl font-bold text-white mb-2 text-shadow-md">{project.title}</h3>
                     <p className="text-slate-300 text-sm mb-4 text-shadow-sm">{project.desc}</p>
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="w-fit flex items-center gap-2 text-sm text-[#04C244] font-medium hover:gap-3 transition-all keep-white">
-                      View Project <ExternalLink size={15} />
-                    </a>
+                    <div className="flex gap-3 mt-auto">
+                      {project.url && project.url !== '#' && (
+                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                          <ExternalLink size={18} />
+                        </a>
+                      )}
+                      {project.github_link && (
+                        <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                          <i className="fab fa-github text-lg"></i>
+                        </a>
+                      )}
+                    </div>
                   </div>
                   {/* Always-visible card footer */}
                   <div className="p-3 sm:p-5 border-t border-slate-100 dark:border-white/5 transition-colors">

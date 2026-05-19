@@ -87,12 +87,16 @@ const Portfolio = () => {
                   {project.title}
                 </h3>
                 <div className="flex gap-3 lg:translate-y-4 lg:group-hover:translate-y-0 transition-transform duration-300 delay-100">
-                  <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
-                    <ExternalLink size={18} />
-                  </button>
-                  <button className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
-                    <i className="fab fa-github text-lg"></i>
-                  </button>
+                  {project.url && project.url !== '#' && (
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                      <ExternalLink size={18} />
+                    </a>
+                  )}
+                  {project.github_link && (
+                    <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                      <i className="fab fa-github text-lg"></i>
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -128,12 +132,16 @@ const Portfolio = () => {
                     {project.title}
                   </h3>
                   <div className="flex gap-2.5">
-                    <button className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
-                      <ExternalLink size={16} />
-                    </button>
-                    <button className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
-                      <i className="fab fa-github text-base"></i>
-                    </button>
+                    {project.url && project.url !== '#' && (
+                      <a href={project.url} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                        <ExternalLink size={16} />
+                      </a>
+                    )}
+                    {project.github_link && (
+                      <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm flex items-center justify-center text-white transition-colors keep-white">
+                        <i className="fab fa-github text-base"></i>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

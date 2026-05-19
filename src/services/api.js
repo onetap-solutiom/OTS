@@ -19,6 +19,7 @@ export async function getProjects() {
         desc: p.desc || p.description || '',
         image: p.image || p.img || '',
         url: p.url || p.demo_link || '#',
+        github_link: p.github_link || p.github || '',
         deadline: p.deadline || '',
         progress: p.progress || 0,
         client: p.client || ''
