@@ -476,7 +476,7 @@ const AdminSettings = () => {
                                                 onClick={() => handleThemeChange('system')}
                                                 className={`p-4 border-2 ${theme === 'system' ? 'border-[#04C244] bg-black/5 dark:bg-white/5' : 'border-transparent hover:border-black/10 dark:hover:border-white/10 bg-black/5 dark:bg-white/5'} rounded-2xl text-center transition-all`}
                                             >
-                                                <div className="w-full h-16 bg-gradient-to-r from-slate-100 to-[#0A0C10] rounded-lg mb-2 border border-black/5"></div>
+                                                <div className="w-full h-16 bg-linear-to-r from-slate-100 to-[#0A0C10] rounded-lg mb-2 border border-black/5"></div>
                                                 <span className="text-xs font-bold text-slate-900 dark:text-white">System</span>
                                             </button>
                                         </div>
