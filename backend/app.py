@@ -34,9 +34,8 @@ from models.token_blocklist import TokenBlocklist
 
 def create_app(config_name='default'):
     """Factory function to create and configure the Flask app."""
-    # Configure logging
+    # Configure logging to stream to console for better visibility in Render logs
     logging.basicConfig(
-        filename=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'security.log'),
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
@@ -65,10 +64,10 @@ def create_app(config_name='default'):
     limiter.init_app(app)
     
     # Auto-create tables (e.g. visits)
-    with app.app_context():
-        db.create_all()
-        # Add new columns to settings table if they don't exist
-        try:
+    try:
+        with app.app_context():
+            db.create_all()
+            # Add new columns to settings table if they don't exist
             from sqlalchemy import text
             for col, col_type in [
                 ('projects_done', 'INTEGER NOT NULL DEFAULT 1'),
@@ -81,8 +80,12 @@ def create_app(config_name='default'):
                     db.session.commit()
                 except Exception:
                     db.session.rollback()  # Column probably already exists
-        except Exception as e:
-            app.logger.warning(f"Auto-migration warning: {e}")
+    except Exception as e:
+        app.logger.error(f"Critical error during database initialization: {e}")
+        # In production, we might want to fail, but let's at least see the error in logs
+        if config_name == 'production':
+            print(f"DATABASE CONNECTION FAILED: {e}")
+
     
     # Initialize JWT
     jwt = JWTManager(app)
