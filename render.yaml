@@ -5,9 +5,9 @@ services:
   - type: web
     name: onetap-backend
     runtime: python
-    rootDir: backend
+    # No rootDir so it uses project root
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     envVars:
       - key: FLASK_ENV
         value: production
